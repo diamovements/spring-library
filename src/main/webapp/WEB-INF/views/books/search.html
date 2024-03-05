@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>index</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/books/search}">
+    <label for="query">Введите запрос</label>
+    <input type="text" id="query" name="query"/>
+    <br/>
+    <input type="submit" value="Найти"/>
+</form>
+
+<div th:if="${books}">
+    <div th:if="${books.isEmpty()}">
+        <span>Книга не найдена</span>
+    </div>
+    <div th:each="book : ${books}">
+        <p th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}">book</p>
+        <div th:if="${book.getOwner()!=null}">
+            <span>Книга сейчас принадлежит: </span> <span th:text="${book.getOwner().getFullName()}">name</span>
+        </div>
+        <div th:if="${book.getOwner==null}">
+            <span>Книга свободна</span>
+        </div>
+        <hr/>
+    </div>
+</div>
+
+</body>
+</html>
